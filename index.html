@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="腾讯地图导航SDK（Android版） : Tencent Map Navigation SDK">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>腾讯地图导航SDK（Android版）</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/TencentMap/navigation-android-sdk">View on GitHub</a>
+
+          <h1 id="project_title">腾讯地图导航SDK（Android版）</h1>
+          <h2 id="project_tagline">Tencent Map Navigation SDK</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/TencentMap/navigation-android-sdk/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/TencentMap/navigation-android-sdk/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="腾讯地图导航sdk开发指南android版" class="anchor" href="#%E8%85%BE%E8%AE%AF%E5%9C%B0%E5%9B%BE%E5%AF%BC%E8%88%AAsdk%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97android%E7%89%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>腾讯地图导航SDK开发指南（Android版）</h1>
+
+<h2>
+<a id="概述" class="anchor" href="#%E6%A6%82%E8%BF%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>概述</h2>
+
+<p>腾讯地图导航SDK（Android版）是一套基于Android
+2.3及以上设备的应用程序接口，通过该接口，您可以轻松使用腾讯地图导航服务。下面对腾讯地图导航流程做简要概述：</p>
+
+<p>腾讯地图导航SDK主要负责导航参数设置，如起终点、导航偏好、途径点等，然后进行路线规划。当路线规划成功后，将规划的导航路线传递给导航引擎，导航引擎结合定位信息，进行导航，然后再将导航信息回调给导航SDK。导航SDK根据回调，使用腾讯地图SDK资源进行导航过程的展示。</p>
+
+<p>API是提供给那些具有一定Android编程经验和了解面向对象概念的读者使用。此外，读者还应该对导航产品有一定的了解。您在使用中遇到任何问题，都可以及时向我们反馈。</p>
+
+<h2>
+<a id="环境搭建" class="anchor" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>环境搭建</h2>
+
+<p>这里我们只提供eclipse 和Android
+Studio下的腾讯地图导航SDK的工程配置方法。</p>
+
+<h4>
+<a id="1准备工作" class="anchor" href="#1%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1、准备工作</h4>
+
+<p>腾讯地图导航SDK使用腾讯地图SDK（3D地图矢量版）的资源进行导航的展示工作，因此您在使用导航SDK之前，应先配置腾讯地图SDK环境，具体请您参考<a href="http://lbs.qq.com/android_v1/guide.html"><em>腾讯地图SDK开发指南</em></a>。</p>
+
+<h4>
+<a id="2eclipse" class="anchor" href="#2eclipse" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2、eclipse</h4>
+
+<p>将下载到的压缩包解压，将"TencentNaviSDK_*.jar"（该jar包命名规则为
+TencentNaviSDK_vX.X.X.jar,
+X.X.X为三位版本号）拷贝到工程目录的libs文件夹下，此外，您还需要将对应平台的so文件拷贝到工程目录libs文件夹下对应的平台目录，如下图所示：</p>
+
+<p><img src="media/image1.png" alt=""></p>
+
+<p>注：libtxnavengine.so为导航引擎库；libwebpJNI.so为wepb库，用于路口放大图、电子眼放大图的解码。导航SDK中不含语音播放库，如果使用语音导航，请使用自己的语音库进行语音解码。</p>
+
+<h4>
+<a id="3android-studio" class="anchor" href="#3android-studio" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3、Android Studio</h4>
+
+<p>方法一：将下载到的压缩包解压，将下载到的压缩包解压，将"TencentNaviSDK_*.jar"（该jar包命名规则为
+TencentNaviSDK_vX.X.X.jar,
+X.X.X为三位版本号）拷贝到app/libs/文件夹下，右键选择"Add As Library"。</p>
+
+<p><img src="media/image2.png" alt=""></p>
+
+<p>此外，需要您在app/src/main/目录下新建jniLibs目录，根据平台的不同将so文件放到对应平台的目录下，如图所示：</p>
+
+<p><img src="media/image3.png" alt=""></p>
+
+<p>方法二：在"Project Structure"中选择"Dependencies", 点击"+"选择"File
+dependency", 选择要添加到工程的jar包即完成开发包的导入，如图所示：</p>
+
+<p><img src="media/image4.png" alt=""></p>
+
+<p>此外，需要您在app/src/main/目录下新建jniLibs目录，根据平台的不同将so文件放到对应平台的目录下，如图所示：</p>
+
+<p><img src="media/image3.png" alt=""></p>
+
+<p>注：libtxnavengine.so为导航引擎库；libwebpJNI.so为wepb库，用于路口放大图、电子眼放大图的解码。导航SDK中不含语音播放库，如果使用语音导航，请使用自己的语音库进行语音解码。</p>
+
+<h2>
+<a id="导航demo工程设置" class="anchor" href="#%E5%AF%BC%E8%88%AAdemo%E5%B7%A5%E7%A8%8B%E8%AE%BE%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>导航Demo工程设置</h2>
+
+<h4>
+<a id="1添加权限" class="anchor" href="#1%E6%B7%BB%E5%8A%A0%E6%9D%83%E9%99%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1、添加权限</h4>
+
+<p>导航sdk需要使用网络，访问硬件存储等系统权限，在AndroidManifest.xml文件里，添加如下权限：</p>
+
+<p>&lt;uses-permission android:name=<em>"android.permission.INTERNET"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.ACCESS_NETWORK_STATE"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.ACCESS_WIFI_STATE"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.ACCESS_COARSE_LOCATION"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.ACCESS_FINE_LOCATION"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.ACCESS_MOCK_LOCATION"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.WRITE_EXTERNAL_STORAGE"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.READ_PHONE_STATE"</em> /&gt;</p>
+
+<p>&lt;uses-permission android:name=<em>"android.permission.CALL_PHONE"</em>
+/&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.READ_PHONE_STATE"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.READ_PHONE_SINTERNETWIFI_STATE"</em>
+/&gt;</p>
+
+<p>&lt;uses-permission android:name=<em>"android.permission.WAKE_LOCK"</em> /&gt;</p>
+
+<p>&lt;uses-permission
+android:name=<em>"android.permission.CHANGE_WIFI_STATE"</em> /&gt;</p>
+
+<h4>
+<a id="2使用地图" class="anchor" href="#2%E4%BD%BF%E7%94%A8%E5%9C%B0%E5%9B%BE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2、使用地图</h4>
+
+<p>导航SDK使用腾讯地图SDK资源进行导航展示，该地图SDK的详细使用说明，请参考<a href="http://lbs.qq.com/android_v1/guide.html"><em>腾讯地图SDK开发指南</em></a>。Demo工程的AndroidManifest.xml文件中，在application节点里，添加名称为TencentMapSDK的meta信息，用于填写开发秘钥。开发秘钥可以到<a href="http://lbs.qq.com/key.html"><em>这里</em></a>申请。</p>
+
+<p>&lt;application</p>
+
+<p>android:allowBackup="true"</p>
+
+<p>android:icon="@drawable/ic_launcher"</p>
+
+<p>android:label="@string/app_name"</p>
+
+<p>android:theme="@style/AppTheme" &gt;</p>
+
+<p>&lt;meta-data</p>
+
+<p>android:name="TencentMapSDK"</p>
+
+<p>android:value="您的腾讯地图SDK秘钥" /&gt;</p>
+
+<p>&lt;/application&gt;</p>
+
+<h4>
+<a id="3导航流程与参数配置" class="anchor" href="#3%E5%AF%BC%E8%88%AA%E6%B5%81%E7%A8%8B%E4%B8%8E%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3、导航流程与参数配置</h4>
+
+<p>导航SDK主要负责导航参数设置，如起点，终点等，然后启动异步线程规划路线，路线规划成功后，把导航路线给导航引擎。导航引擎结合定位SDK，进行导航，把导航信息回调给导航SDK。导航SDK根据回调，使用地图SDK进行导航过程的展示。流程图如下：</p>
+
+<p><img src="media/image5.png" alt=""></p>
+
+<h6>
+<a id="tencentnavigationmanager类" class="anchor" href="#tencentnavigationmanager%E7%B1%BB" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TencentNavigationManager类</h6>
+
+<p>导航SDK的设置是通过TencentNavigationManager类进行设置，并由该类暴露对外调用接口，TencentNavigationManager设置底图、比例尺缩放级别、设置导航过程中是否显示电子眼和路口放大图，设置导航的起终点等基本导航设置。此外对于导航的各种回调监听也是绑定到TencentNavigationManager。下面是TencentNavigationManager类的使用示。</p>
+
+<p>// 定义TencentNaviManager对象</p>
+
+<p><strong>private</strong> TencentNavigationManager tencentNaviManager = <strong>null</strong>;</p>
+
+<p><a href="https://github.com/Override" class="user-mention">@Override</a></p>
+
+<p><strong>protected</strong> <strong>void</strong> onCreate(Bundle savedInstanceState) {</p>
+
+<p><strong>super</strong>.onCreate(savedInstanceState);</p>
+
+<p>// 获取TencentNaviManager实例</p>
+
+<p>tencentNaviManager = TencentNavigationManager.<em>getInstance</em>(<strong>this</strong>);</p>
+
+<blockquote>
+<p>// 设置tts语音模块监听</p>
+</blockquote>
+
+<p>tencentNaviManager.setTtsListener(ttsListener);</p>
+
+<blockquote>
+<p>// 设置设置地图对象，这里使用TencentMap的实例</p>
+</blockquote>
+
+<p>tencentNaviManager.setMapView(mMap.getMapView());</p>
+
+<blockquote>
+<p>// 设置算路回调，非偏航</p>
+</blockquote>
+
+<p>tencentNaviManager.setSearchRouteCallbck(searchRouteCallback);</p>
+
+<blockquote>
+<p>// 设置偏航算路回调</p>
+</blockquote>
+
+<p>tencentNaviManager.setSearchOffRouteCallback(searchOffRouteCallback);</p>
+
+<p>// 是否开启路口放大图功能</p>
+
+<p>tencentNaviManager.setCrossingEnlargePictureEnable(<strong>true</strong>);</p>
+
+<blockquote>
+<p>// 设置导航过程中3d模式下，车标位于屏幕的比例</p>
+</blockquote>
+
+<p>tencentNaviManager.setNaviFixingProportion(0.5f, 0.75f);</p>
+
+<blockquote>
+<p>// 是否开启电子眼放大图功能</p>
+</blockquote>
+
+<p>tencentNaviManager.setElectriEyesPictureEnable(<strong>true</strong>);</p>
+
+<blockquote>
+<p>// 是否显示导航的Overlay</p>
+</blockquote>
+
+<p>tencentNaviManager.setNavigationOverlayEnable(<strong>true</strong>);</p>
+
+<p>}</p>
+
+<h6>
+<a id="设置起点终点以及途径点" class="anchor" href="#%E8%AE%BE%E7%BD%AE%E8%B5%B7%E7%82%B9%E7%BB%88%E7%82%B9%E4%BB%A5%E5%8F%8A%E9%80%94%E5%BE%84%E7%82%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>设置起点、终点以及途径点</h6>
+
+<p>设置起点：tencentNaviManager.setStartPosition(startPosition);</p>
+
+<p>设置终点：tencentNaviManager.setDestinationPosition (destLatlng);</p>
+
+<p>设置途径点：List&lt;LatLng&gt; listPass = <strong>new</strong>
+ArrayList&lt;LatLng&gt;();</p>
+
+<p>listPass.add(passPoint);</p>
+
+<p>tencentNaviManager.setWayPoints(listPass);</p>
+
+<h6>
+<a id="算路" class="anchor" href="#%E7%AE%97%E8%B7%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>算路</h6>
+
+<p>导航SDK启动异步线程规划路线，路线规划成功后，把导航路线给导航引擎。</p>
+
+<p>算路：tencentNaviManager.calculateRoute();</p>
+
+<p>使用SearchRouteTask进行异步的路线规划，SearchRouteTask的详情请参考API文档。</p>
+
+<p>Demo规划的路线如图所示：</p>
+
+<p><img src="media/image6.png" alt=""></p>
+
+<h6>
+<a id="开始导航与结束导航" class="anchor" href="#%E5%BC%80%E5%A7%8B%E5%AF%BC%E8%88%AA%E4%B8%8E%E7%BB%93%E6%9D%9F%E5%AF%BC%E8%88%AA" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>开始导航与结束导航</h6>
+
+<p>导航引擎结合定位SDK，进行导航，把导航信息回调给导航SDK。导航SDK根据回调，使用地图SDK进行导航过程的展示。</p>
+
+<p>开始导航：tencentNaviManager.startNavi();</p>
+
+<p>结束导航：tencentNaviManager.stopNavi();</p>
+
+<p>导航过程中的地图展示：</p>
+
+<p><img src="media/image7.png" alt=""></p>
+
+<p><img src="media/image8.png" alt=""></p>
+
+<p>导航资源包括：</p>
+
+<p>导航定位图标：<img src="media/image9.png" alt=""></p>
+
+<p>实时路况信息（彩虹蚯蚓）：<img src="media/image10.png" alt=""></p>
+
+<p>走过的路置灰：<img src="media/image11.png" alt=""></p>
+
+<p>路口放大图：<img src="media/image12.png" alt=""></p>
+
+<p>其他的资源如车道线信息，电子眼放大图等，请您参考API文档。</p>
+
+<h6>
+<a id="导航回调" class="anchor" href="#%E5%AF%BC%E8%88%AA%E5%9B%9E%E8%B0%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>导航回调</h6>
+
+<p>导航SDK提供了丰富的回调函数，来回调导航中的操作。所有的回调事件都绑定在TencentNavigationManager对象上，下面列出了腾讯地图导航支持的回调：</p>
+
+<p>导航过程中回调 TencentNavigationManager.TencentNaviCallback</p>
+
+<hr>
+
+<p>查询路线回调 （非偏航）   TencentNavigationManager.SearchRouteCallback
+  查询偏航路线回调          TencentNavigationManager.SearchOffRouteCallback</p>
+
+<p>上述回调的具体信息，请您参阅API文档。</p>
+
+<h2>
+<a id="注意事项" class="anchor" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>注意事项</h2>
+
+<ol>
+<li><p>项目必须使用utf8编码格式，如果出现类似“at
+java.net.URLEncoder.encode”的错误，请检查项目编码格式。</p></li>
+<li><p>导航SDK使用腾讯地图SDK（3D地图矢量版）的地图资源进行展示。请您预先配置腾讯地图SDK环境。</p></li>
+<li><p>导航SDK不包含定位功能，建议用户使用腾讯定位SDK。</p></li>
+<li><p>导航SDK不包含语音播报库，建议用户使用TTS语音进行语音播报。</p></li>
+<li><p>如有问题，可以到腾讯地图开发者论坛，或者技术支持qq群寻求帮助。</p></li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">腾讯地图导航SDK（Android版） maintained by <a href="https://github.com/TencentMap">TencentMap</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
